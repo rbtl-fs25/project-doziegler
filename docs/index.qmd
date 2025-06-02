@@ -1,27 +1,125 @@
 ---
-title: "index.qmd"
-author: "Dominic Ziegler"
-format: html
+title: "ETH Repair Cafe Survey"
+date: today
+author:
+  - name: Dominic Ziegler
+    orcid: 0009-0007-1161-3098
+    email: doziegler@student.ethz.ch
+    affiliation: 
+      - name: ETH Zurich
+        url: https://ethz.ch/de.html
+table-of-contents: true
+license: "CC BY"
+citation: 
+  container-title: My Blog
+  url: https://www.example.com
+bibliography: Bibliography.bib
+
 editor: visual
 ---
 
-## Quarto
+# Introduction
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+Repairing is one of the most effective strategies for reducing waste and environmental impact. @hernandez_empowering_2020 highlight that empowering consumers with the 'Right to Repair' is crucial for sustainable consumption, as it encourages prolonging product lifespans and reduces the need for new resource extraction. Despite this, many products are discarded due to high repair costs and limited access to repair services [@blake2019voluntary]. This project investigates the potential impact of establishing a permanent Repair Café at ETH Zürich by surveying student attitudes toward repair and waste behavior. The central research question is: *What percentage of students would consider repairing a broken item themselves or with help if there were a designated Repair Café at ETH Zürich?*
 
-## Running Code
+# Methods
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+Data was collected through a short online survey conducted via Google Forms, consisting of 18 questions. The survey gathered demographic information such as age, university affiliation, and estimated monthly food budget as a proxy for overall financial resources. Participants were also asked about their sustainability attitudes and waste-related behavior over the past year, including whether they had discarded items that could potentially have been repaired. In the final section, the concept of a permanent Repair Café at ETH Zürich was introduced, and participants were asked how likely they would be to use such a service.
 
-```{r}
-1 + 1
-```
+# Results
 
-You can add options to executable code like this
+In this section, the 21 responses to the survey are summarized and visualized. @tbl-skills says ...
 
 ```{r}
-#| echo: false
-2 * 2
+#| error: false
+#| message: false
+library(tidyverse)
+library(ggplot2)
+library(gt)
+library(knitr)
+data <- read_csv("../data/processed/repaircafe_data_processed.csv",show_col_types = FALSE)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+```{r}
+#| error: false
+#convert to long format
+data_skill_tbl <- data %>% 
+  select(12:17) %>%     # Keep only the 6 response columns
+  pivot_longer(cols = everything(), # Turn them into two columns
+               names_to = "skill",
+               values_to = "value")
+#summary table
+skill_summary_table <- data_skill_tbl %>%
+  group_by(skill) %>%
+  summarise(
+    
+    mean = mean(value, na.rm = TRUE),
+    sd = sd(value, na.rm = TRUE),
+    median = median(value, na.rm = TRUE),
+    min = min(value, na.rm = TRUE),
+    max = max(value, na.rm = TRUE),
+    count = n(),
+    .groups = 'drop'
+  )
+#rename category names
+skill_summary_table <- skill_summary_table %>% mutate(skill=factor(skill,
+                                         levels = c("skill_assembly","skill_electronics",
+                                                    "skill_filigrane","skill_metal",
+                                                    "skill_textile","skill_wood"),
+                                         labels = c("Assembly","Electronics","Filigrane work"
+                                                    ,"Metalworking","Textile","Woodworking")
+))
+```
+
+```{r}
+#| error: false
+#| label: tbl-skills
+#| tbl-cap: "Self-assessed repair skills in various categories. Data from 21 survey participants"
+skill_summary_table %>% gt() %>% 
+  tab_header(title = "Repair skills assesment in various categories",
+             subtitle =  "Linear Scale from 1-5") %>% 
+  fmt_number(columns = mean:count, decimals = 2) %>% 
+  cols_label(skill = "Skill category")
+```
+
+```{r}
+#Discarded Items and repair considered:
+data_discarded_items <- data %>% select(19:29) %>% pivot_longer(cols = 1:10, 
+                                                           names_to = "object",
+                                                           values_to = "amount")
+data_discarded_items <- data_discarded_items %>% 
+  mutate(object = factor(object,
+                         levels = c("bi_clothes","bi_other_items","bi_shoes"
+                                    ,"bi_other_electronics",
+                                    "bi_household_electronics","bi_furniture","bi_computer"
+                                    ,"bi_tablet",
+                                    "bi_phone","bi_bike"),
+                         labels = c("Clothes","Other Items","Shoes","Other Electronics"
+                                    ,"Household Electronics",
+                                    "Furniture","Computer","Tablet","Phone","Bike")))
+data_discarded_items %>%
+  group_by(object,repair_considered) %>%
+  summarise(total = sum(amount, na.rm = TRUE), .groups = "drop") %>%
+  ggplot(aes(x = reorder(object, total), y = total,fill = repair_considered)) +
+  geom_col() +
+  coord_flip() +
+  labs(x = NULL, y = "# of discarded items",
+       title = "Total discarded items that could have been repaired",
+       fill = "Was repairing considered?")
+```
+
+### reasons for not repairing
+
+from the ... respondents that did not consider repairing one or more of the discarded items, ... and ... were the main reasons for not repairing.
+
+### cost of repair:
+
+As the cost for repair seems to be a major factor to whether an item is repaired or not, the question how much would participants pay for a repair as a percentage of the new price: on average of 41% of the new price, with responses spanning from 20% to 80%
+
+# Conclusions
+
+... et al stated that the lack of ability to repair /the price is the biggest factor why items get thrown away instead of being repaired.
+
+As 100 % of the participants of the study would be interested in learning new repairing skills, a repair cafe at ETH could have a big impact as a place where new skills can be acquired which then would reduce the amount of waste created ...
+
+# References
