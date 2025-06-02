@@ -1,0 +1,39 @@
+variable_name,description
+ID,A unique ID that corresponds to each survey entry.
+time,Timestamp of survey response submission.
+gender,Gender of participant.
+age,Age of participant.
+uni,Participants attended university if any.
+monthly_food_expenses,Monthly food expenses (ranges already averaged).
+stable_income,Participant has a stable monthly income.
+Sustainability_importance,Importance of Sustainability in daily life on a scale from 1-7.
+phone_screen_breaks,Participants repairing behaviour if phone screen breaks.
+likelihood of repair,Likelihood of repair of broken items in general on a scale from 1-5.
+max_price_of_repair,Maximum price which the participant would pay for a repair in percent of price of new item.
+skill_electronics,Repair skill self assesment in category metalworking on a scale from 1-5.
+skill_metal,Repair skill self assesment in category metalworking on a scale from 1-5.
+skill_wood,Repair skill self assesment in category woodworking on a scale from 1-5.
+skill_textile,Repair skill self assesment in category textile on a scale from 1-5.
+skill_assembly,Repair skill self assesment in category assembly on a scale from 1-5.
+skill_filigrane,Repair skill self assesment in category filigrane work on a scale from 1-5.
+most_difficult_repair,Most difficult repair participant has ever done.
+bi_phone,Number of potentially repairable items that were discarded in the last year in the category phone.
+bi_tablet,Number of potentially repairable items that were discarded in the last year in the category tablet.
+bi_computer,Number of potentially repairable items that were discarded in the last year in the category computer.
+bi_household_electronics,Number of potentially repairable items that were discarded in the last year in the category household electronics.
+bi_other_electronics,Number of potentially repairable items that were discarded in the last year in the category other electronics.
+bi_bike,Number of potentially repairable items that were discarded in the last year in the category bike.
+bi_furniture,Number of potentially repairable items that were discarded in the last year in the category furniture.
+bi_clothes,Number of potentially repairable items that were discarded in the last year in the category clothes.
+bi_shoes,Number of potentially repairable items that were discarded in the last year in the category shoes.
+bi_other_items,Number of potentially repairable items that were discarded in the last year in the category other items..
+repair_considered,Indicates whether a repair was considered for the items in bi_... .
+rno_difficult,Repair was not an option due to difficulty.
+rno_time,Repair was not an option because it was not worth the time needed to repair.
+rno_expensive,Repair was not an option due to price of repair..
+rno_motivation,Repair was not an option due to lack of motivation.
+rno_other,Repair was not an option due to other reasons.
+eth_rc_usage_likelihood,Indicates on a scale from 1-5 the likelihood of repairing a broken item if they had access to the ETH repair cafe
+eth_rc,Indicates wether participants would consider using the eth repair cafe
+eth_rc_help,Indicates wether participants would consider helping out other student at the ETH repair cafe
+eth_rc_learn,Indicates whether participants would be interested in learning new repair skills
