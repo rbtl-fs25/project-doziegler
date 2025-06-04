@@ -1,0 +1,55 @@
+reason,value
+too difficult,TRUE
+not woth my time,TRUE
+too expensive,TRUE
+not motivated enough,TRUE
+other,TRUE
+too difficult,FALSE
+not woth my time,TRUE
+too expensive,FALSE
+not motivated enough,TRUE
+other,FALSE
+too difficult,TRUE
+not woth my time,FALSE
+too expensive,TRUE
+not motivated enough,FALSE
+other,FALSE
+too difficult,TRUE
+not woth my time,TRUE
+too expensive,TRUE
+not motivated enough,TRUE
+other,TRUE
+too difficult,TRUE
+not woth my time,TRUE
+too expensive,TRUE
+not motivated enough,TRUE
+too difficult,TRUE
+not woth my time,FALSE
+too expensive,TRUE
+not motivated enough,TRUE
+other,FALSE
+too difficult,TRUE
+not woth my time,TRUE
+too expensive,TRUE
+not motivated enough,TRUE
+not woth my time,TRUE
+not motivated enough,TRUE
+too difficult,TRUE
+not woth my time,TRUE
+too expensive,TRUE
+not motivated enough,FALSE
+other,FALSE
+too difficult,TRUE
+not woth my time,FALSE
+too expensive,TRUE
+not motivated enough,TRUE
+too difficult,TRUE
+not woth my time,FALSE
+too expensive,FALSE
+not motivated enough,TRUE
+other,TRUE
+too difficult,TRUE
+not woth my time,FALSE
+too expensive,FALSE
+not motivated enough,TRUE
+other,TRUE

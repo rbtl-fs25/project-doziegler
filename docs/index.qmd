@@ -45,6 +45,7 @@ data_demographic <-data %>% select(age,gender,uni,monthly_food_expenses) %>% mut
 
 ggplot(data = data_demographic, aes(x = age, fill = uni)) +
   geom_bar()+labs(title="Demographical data",fill="University")
+write_csv(data_demographic,"../data/final/data_demographic_plot.csv")
 ```
 
 ### Repairing skill self-assessment
@@ -92,6 +93,8 @@ skill_summary_table %>% gt() %>%
              subtitle =  "Linear Scale from 1-5") %>% 
   fmt_number(columns = mean:count, decimals = 2) %>% 
   cols_label(skill = "Skill category")
+
+write_csv(skill_summary_table,"../data/final/data_skill_summary_table.csv")
 ```
 
 ### Amount of discarded items
@@ -124,6 +127,8 @@ data_discarded_items %>%
   labs(x = NULL, y = "# of discarded items",
        title = "Total discarded items that could have been repaired",
        fill = "Was repairing considered?") + theme_minimal() + scale_color_colorblind()
+
+write_csv(data_discarded_items,"../data/final/data_discarded_items_plot.csv")
 ```
 
 ### Reasons for not repairing
@@ -154,6 +159,7 @@ data_norepair_long %>%
   coord_flip() +
   labs(x = NULL, y = "number of respondents",
        title = "Main reasons for not repairing a broken item")+theme_minimal()+scale_colour_colorblind()
+write_csv(data_norepair_long,"../data/final/data_repair_not_feasible.csv")
 ```
 
 ### Cost of repair
@@ -165,11 +171,11 @@ The second-most important reason for not repairing an item is the price of the r
 #| fig-cap: "Maximum price that participants would pay for a repair."
 # How much would you pay in percent of new price? 
 
-
-ggplot(data, aes(x = max_price_of_repair,fill=monthly_food_expenses)) +
+data_maxprice <- data %>% select(max_price_of_repair)
+ggplot(data_maxprice, aes(x = max_price_of_repair)) +
   geom_histogram(binwidth = 5, fill = "steelblue", color = "white") +
   labs(x = "price in % of items new price", y = "Frequency", title = "Maximum price of repair")
-
+write_csv(data_maxprice,"../data/final/data_max_price_plot.csv")
 ```
 
 ### ETH Repaircafe
@@ -183,9 +189,9 @@ In @tbl-eth_rc it can be seen that at least 33% of participants would consider h
 #| fig-cap: likelihood of using the ETH Repair cafe
 #Likelihood of ETH Repaircafe usage:
 
-df_summary <- data %>% count(eth_rc) %>% mutate(rc_percent = round(n / sum(n) * 100))
+data_repaircafe_summary <- data %>% count(eth_rc) %>% mutate(rc_percent = round(n / sum(n) * 100))
   
-ggplot(data = df_summary, aes(
+ggplot(data = data_repaircafe_summary, aes(
   x = "",
   y = n,
   fill = eth_rc
@@ -195,6 +201,7 @@ ggplot(data = df_summary, aes(
             position = position_stack(vjust = 0.5)) +
   theme_void() +
   labs(title="Likelihood of using the ETH Repair Café",fill = "Would you use the ETH Repair Cafe?")
+write_csv(data_repaircafe_summary,"../data/final/data_repaircafe_plot.csv")
 ```
 
 ```{r}
@@ -235,6 +242,7 @@ data_eth_rc_tbl %>%
     Maybe = "Maybe (%)",
     No = "No (%)"
   )
+write_csv(data_eth_rc_tbl,"../data/final/data_repaircafe_table.csv")
 ```
 
 # Conclusions
