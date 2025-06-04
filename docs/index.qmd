@@ -164,7 +164,7 @@ write_csv(data_norepair_long,"../data/final/data_repair_not_feasible.csv")
 
 ### Cost of repair
 
-The second-most important reason for not repairing an item is the price of the repair. Here participants were also asked how much they would be willing to pay for a repair, these results can be seen in @fig-maxprice-repair. It seems that the average participant would be willing to pay up to 40% of the new price to get an item repaired. This is an interesting number that scales with the value of the item: the budget for replacement parts for a broken computer for example is way higher than for a cheap tshirt, so more expensive items are probably also repaired more often in general.
+The second-most important reason for not repairing an item is the price of the repair. Here participants were also asked how much they would be willing to pay for a repair, these results can be seen in @fig-maxprice-repair. It seems that the average participant would be willing to pay up to 40% of the new price to get an item repaired. Spare parts can be costly—particularly for high-end electronics—but when repairs are done independently, such as at the ETH Repair Café, the entire budget can go toward parts rather than labor, making it more feasible to restore items and ultimately increasing the number of successful repairs.
 
 ```{r}
 #| label: fig-maxprice-repair
