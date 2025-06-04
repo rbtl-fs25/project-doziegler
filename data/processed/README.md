@@ -2,7 +2,7 @@
 
 ## General information
 
-1.  Title of Dataset:  
+1.  Title of Dataset:  repaircafe_data_processed.csv
 
 2.  Author Information
 
@@ -23,11 +23,9 @@
 
 ## Sharing / access information
 
-1.  Licenses/restrictions placed on the data:  
+1.  Licenses/restrictions placed on the data:  This work is licensed under the Creative Commons Attribution 4.0 International license (CC-BY-4.0).
 
-Recommended: This work is licensed under the Creative Commons Attribution 4.0 International license (CC-BY-4.0).
-
-2.  Links to publications that cite or use the data: 
+2.  Links to publications that cite or use the data: -
 
 3.  Links to other publicly accessible locations of the data: -
 
@@ -39,7 +37,7 @@ Recommended: This work is licensed under the Creative Commons Attribution 4.0 In
 
 1.  Description of methods used for collection/generation of data: Google forms
 
-2.  Methods for processing the data: R
+2.  Methods for processing the data: R data analysis scripts
 
 3.  Instrument- or software-specific information needed to interpret the
     data: -
@@ -48,7 +46,7 @@ Recommended: This work is licensed under the Creative Commons Attribution 4.0 In
 
 5.  Environmental/experimental conditions: -
 
-6.  Describe any quality-assurance procedures performed on the data: 
+6.  Describe any quality-assurance procedures performed on the data: -
 
 7.  People involved with sample collection, processing, analysis and/or
     submission: Dominic Ziegler
