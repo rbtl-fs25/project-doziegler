@@ -25,7 +25,7 @@
 
 1.  Licenses/restrictions placed on the data:  This work is licensed under the Creative Commons Attribution 4.0 International license (CC-BY-4.0).
 
-2.  Links to publications that cite or use the data: -
+2.  Links to publications that cite or use the data: https://rbtl-fs25.github.io/project-doziegler/
 
 3.  Links to other publicly accessible locations of the data: -
 
