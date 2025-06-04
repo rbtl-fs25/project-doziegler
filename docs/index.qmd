@@ -10,9 +10,6 @@ author:
         url: https://ethz.ch/de.html
 table-of-contents: true
 license: "CC BY"
-citation: 
-  container-title: My Blog
-  url: https://www.example.com
 bibliography: Bibliography.bib
 code-fold: true
 editor: visual
@@ -197,7 +194,7 @@ ggplot(data = df_summary, aes(
   geom_text(aes(label = paste0(rc_percent, "%")), 
             position = position_stack(vjust = 0.5)) +
   theme_void() +
-  labs(title="Would you use the eth repair cafe",fill = "ETH RC Usage")
+  labs(title="Likelihood of using the ETH Repair Café",fill = "Would you use the ETH Repair Cafe?")
 ```
 
 ```{r}
