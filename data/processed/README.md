@@ -8,26 +8,18 @@
 
 **Author A**
 
-- First name:
-- Surname:
-- ORCID iD
-- Email:
+- First name:Dominic
+- Surname: Ziegler
+- ORCID iD: 0009-0007-1161-3098
+- Email: doziegler[at]student.ethz.ch
 
-**Author B**
 
-- First name:
-- Surname:
-- ORCID iD
-- Email:
+3.  Date of data collection (single date, range, approximate date): from 08.05.2025 - 29.05.2025
 
-etc.
-
-3.  Date of data collection (single date, range, approximate date):
-
-4.  Geographic location of data collection:
+4.  Geographic location of data collection: Zürich, Switzerland
 
 5.  Information about funding sources that supported the collection of
-    the data: 
+    the data: no funding
 
 ## Sharing / access information
 
@@ -39,24 +31,24 @@ Recommended: This work is licensed under the Creative Commons Attribution 4.0 In
 
 3.  Links to other publicly accessible locations of the data: -
 
-4.  Links/relationships to ancillary data sets: 
+4.  Links/relationships to ancillary data sets: -
 
-5.  Was data derived from another source? 
+5.  Was data derived from another source? -
 
 ## Methodological information
 
-1.  Description of methods used for collection/generation of data:
+1.  Description of methods used for collection/generation of data: Google forms
 
-2.  Methods for processing the data:
+2.  Methods for processing the data: R
 
 3.  Instrument- or software-specific information needed to interpret the
-    data: 
+    data: -
 
 4.  Standards and calibration information, if appropriate: -
 
-5.  Environmental/experimental conditions: 
+5.  Environmental/experimental conditions: -
 
 6.  Describe any quality-assurance procedures performed on the data: 
 
 7.  People involved with sample collection, processing, analysis and/or
-    submission:
+    submission: Dominic Ziegler

@@ -14,7 +14,7 @@ citation:
   container-title: My Blog
   url: https://www.example.com
 bibliography: Bibliography.bib
-
+code-fold: true
 editor: visual
 ---
 
@@ -28,20 +28,40 @@ Data was collected through a short online survey conducted via Google Forms, con
 
 # Results
 
-In this section, the 21 responses to the survey are summarized and visualized. @tbl-skills says ...
+In this section, the 21 responses to the survey are summarized and visualized. @fig-demographics shows that majority of participants were students of ETH Zürich between 21 and 25 years old. This was not a condition to participate in the survey, but rather a product of how the survey was distributed and advertised, as participants were mostly found via whatsapp-groupchats of ETH students.
+
+```{r}
+#| error: false
+#| label: fig-demographics
+#| fig-cap: "Age and university of the 21 survey participants"
+#| message: false
+library(tidyverse)
+library(ggplot2)
+library(ggthemes)
+library(ggridges)
+library(gt)
+library(knitr)
+
+data <- read_csv("../data/processed/repaircafe_data_processed.csv",show_col_types = FALSE)
+
+data_demographic <-data %>% select(age,gender,uni,monthly_food_expenses) %>% mutate(uni = case_when(uni == "I am not a student" ~ "not a student", TRUE ~ uni))
+
+ggplot(data = data_demographic, aes(x = age, fill = uni)) +
+  geom_bar()+labs(title="Demographical data",fill="University")
+```
+
+### Repairing skill self-assessment
+
+In @tbl-skills you can see the results of the skill self-assessment where participants had to rate their repair skills in various categories on a scale from 1-5. The relatively high standard deviations indicate a diverse level of skills among the participants. Metalworking stands out with the lowest average level of repair skills among the participants, which could be due to the inaccessibility of proper metal workshops and maybe also due to the fact that metalworking is probably one of the more dangerous categories of repairing. Here the ETH Repair cafe could do a great job as a place where new skills in new domains could be acquired and learned in a safe environment.
 
 ```{r}
 #| error: false
 #| message: false
-library(tidyverse)
-library(ggplot2)
-library(gt)
-library(knitr)
-data <- read_csv("../data/processed/repaircafe_data_processed.csv",show_col_types = FALSE)
-```
+#| label: tbl-skills
+#| tbl-cap: "Self-assessed repair skills in various categories. Data from 21 survey participants"
 
-```{r}
-#| error: false
+
+
 #convert to long format
 data_skill_tbl <- data %>% 
   select(12:17) %>%     # Keep only the 6 response columns
@@ -69,12 +89,7 @@ skill_summary_table <- skill_summary_table %>% mutate(skill=factor(skill,
                                          labels = c("Assembly","Electronics","Filigrane work"
                                                     ,"Metalworking","Textile","Woodworking")
 ))
-```
 
-```{r}
-#| error: false
-#| label: tbl-skills
-#| tbl-cap: "Self-assessed repair skills in various categories. Data from 21 survey participants"
 skill_summary_table %>% gt() %>% 
   tab_header(title = "Repair skills assesment in various categories",
              subtitle =  "Linear Scale from 1-5") %>% 
@@ -82,7 +97,13 @@ skill_summary_table %>% gt() %>%
   cols_label(skill = "Skill category")
 ```
 
+### Amount of discarded items
+
+To materialize the potential impact of setting up a permanent repair café at ETH Zürich, participants were asked to disclose the amount of items that were discarded during the last year, which could maybe have been repaired. The results in @fig-discarded_items show that the most commonly discarded items were clothes, which could be due to the abundance and relative low price of clothes, so buying a new clothing item is often the more attractive option compared to repairing an already worn item. What is nice to see is that only for a very small part of the discarded items, a repair was not even considered, while for the majority of items, at least a few items were considered to be repaired.
+
 ```{r}
+#| label: fig-discarded_items
+#| fig-cap: Total amount of potentially repairable items that were discarded last year
 #Discarded Items and repair considered:
 data_discarded_items <- data %>% select(19:29) %>% pivot_longer(cols = 1:10, 
                                                            names_to = "object",
@@ -105,21 +126,130 @@ data_discarded_items %>%
   coord_flip() +
   labs(x = NULL, y = "# of discarded items",
        title = "Total discarded items that could have been repaired",
-       fill = "Was repairing considered?")
+       fill = "Was repairing considered?") + theme_minimal() + scale_color_colorblind()
 ```
 
-### reasons for not repairing
+### Reasons for not repairing
 
-from the ... respondents that did not consider repairing one or more of the discarded items, ... and ... were the main reasons for not repairing.
+The reasons for not considering a repair were also assessed, which can be seen in @fig-norepair. It seems that the difficulty of the repair is the most important factor which leads to a broken item not being repaired, together with a lack of motivation. These two factors could maybe also be dependent of each other, as when a repair is assessed as too difficult, obviously the motivation to try to repair it is going to be low as well.
 
-### cost of repair:
+```{r}
+#| label: fig-norepair
+#| fig-cap: "Main reasons for not considering to repair a broken item, n= 12 responses"
+# why you didn't repair
+data_norepair_long <-data %>% select(rno_difficult:rno_other) %>%
+  pivot_longer(everything(),
+               names_to = "reason",
+               values_to = "value",
+               values_drop_na = TRUE)
+data_norepair_long <- data_norepair_long %>% 
+  mutate(reason = factor(reason,
+                         levels = c("rno_difficult","rno_expensive","rno_motivation"
+                                    ,"rno_other",
+                                    "rno_time"),
+                         labels = c("too difficult","too expensive","not motivated enough"
+                                    ,"other","not woth my time")))
+data_norepair_long %>%
+  group_by(reason) %>%
+  summarise(total = sum(value, na.rm = TRUE), .groups = "drop") %>%
+  ggplot(aes(x = reorder(reason, total), y = total)) +
+  geom_col(fill="steelblue") +
+  coord_flip() +
+  labs(x = NULL, y = "number of respondents",
+       title = "Main reasons for not repairing a broken item")+theme_minimal()+scale_colour_colorblind()
+```
 
-As the cost for repair seems to be a major factor to whether an item is repaired or not, the question how much would participants pay for a repair as a percentage of the new price: on average of 41% of the new price, with responses spanning from 20% to 80%
+### Cost of repair
+
+The second-most important reason for not repairing an item is the price of the repair. Here participants were also asked how much they would be willing to pay for a repair, these results can be seen in @fig-maxprice-repair. It seems that the average participant would be willing to pay up to 40% of the new price to get an item repaired. This is an interesting number that scales with the value of the item: the budget for replacement parts for a broken computer for example is way higher than for a cheap tshirt, so more expensive items are probably also repaired more often in general.
+
+```{r}
+#| label: fig-maxprice-repair
+#| fig-cap: "Maximum price that participants would pay for a repair."
+# How much would you pay in percent of new price? 
+
+
+ggplot(data, aes(x = max_price_of_repair,fill=monthly_food_expenses)) +
+  geom_histogram(binwidth = 5, fill = "steelblue", color = "white") +
+  labs(x = "price in % of items new price", y = "Frequency", title = "Maximum price of repair")
+
+```
+
+### ETH Repaircafe
+
+The concept of a permanent repair cafe was introduced and as @fig-repaircafe-usage shows, 81 % of the participants would consider repairing a broken item at the ETH Repair Café, while the remaining 19 % stated that they would maybe do so as well. This shows that a there is definetly an interest in having a place where you can repair stuff while having skilled people around that can help.
+
+In @tbl-eth_rc it can be seen that at least 33% of participants would consider helping others with repairs at least once a month, while 52% would maybe do so. By having a pool of skilled volunteers, the ETH repair café could work without a big amount of monthly expenses (excluding rent and the initial costs of all the machines etc. of course), which is key to keep the price low which leaves more budget for the actual repairs.
+
+```{r}
+#| label: fig-repaircafe-usage
+#| fig-cap: likelihood of using the ETH Repair cafe
+#Likelihood of ETH Repaircafe usage:
+
+df_summary <- data %>% count(eth_rc) %>% mutate(rc_percent = round(n / sum(n) * 100))
+  
+ggplot(data = df_summary, aes(
+  x = "",
+  y = n,
+  fill = eth_rc
+)) +geom_col(width = 1) +
+  coord_polar(theta = "y") +
+  geom_text(aes(label = paste0(rc_percent, "%")), 
+            position = position_stack(vjust = 0.5)) +
+  theme_void() +
+  labs(title="Would you use the eth repair cafe",fill = "ETH RC Usage")
+```
+
+```{r}
+#| label: tbl-eth_rc
+#| tbl-cap: "Results from survey questions regarding the ETH repair café"
+# Step 1: Pivot the two columns into long format
+data_eth_rc <- data %>%
+  select(eth_rc_help, eth_rc_learn) %>%
+  pivot_longer(cols = everything(), names_to = "variable", values_to = "response")
+
+data_eth_rc <-data_eth_rc %>% mutate(variable = factor(variable,levels = c("eth_rc_help","eth_rc_learn"), labels = c("Would you consider helping out at the ETH RC?","Would you be motivated to learn new repair skills?")))
+
+# Step 2: Count and compute percent per variable and response
+data_eth_rc_tbl <- data_eth_rc %>%
+  group_by(variable, response) %>%
+  summarise(n = n(), .groups = "drop") %>%
+  group_by(variable) %>%
+  mutate(percent = round(n / sum(n) * 100, 1)) %>%
+  ungroup() %>%
+  select(variable, response, percent) %>%
+  pivot_wider(names_from = response, values_from = percent, values_fill = 0)
+
+# Step 3: Create gt table without row grouping
+data_eth_rc_tbl %>%
+  gt(rowname_col = NULL) %>%
+  tab_header(
+    title = "ETH Repair Café Responsens",
+    subtitle = "Percentages of 'Yes', 'Maybe', and 'No', n = 21"
+  ) %>%
+  fmt_percent(
+    columns = c(Yes, Maybe, No),
+    scale_values = FALSE,
+    decimals = 1
+  ) %>%
+  cols_label(
+    variable = "Question",
+    Yes = "Yes (%)",
+    Maybe = "Maybe (%)",
+    No = "No (%)"
+  )
+```
 
 # Conclusions
 
-... et al stated that the lack of ability to repair /the price is the biggest factor why items get thrown away instead of being repaired.
+-   **4.1** items is the average amount of potentially repairable items which the average participant discarded in the last year. This may not seem like a lot, but if this number is scaled to all members of ETH Zürich it is easy to see that if done right, a permanent repair café at ETH could have a great impact on reducing generated waste.
 
-As 100 % of the participants of the study would be interested in learning new repairing skills, a repair cafe at ETH could have a big impact as a place where new skills can be acquired which then would reduce the amount of waste created ...
+-   **40%** of the new price of an item is the average amount participants would pay for a repair. Therefore, running the ETH Repair Café as low-cost as possible is very important. Here a system of student volunteers could be a feasible solution, as:
+
+-   **33%** of participants would be willing to help other students with repairs at the Repair Café at least once a month, while 53% stated they would be maybe be willing to help out.
+
+-   **81%** of participants would consider repairing a broken item at the ETH Repair Café, while the other 19% would maybe consider to do so.
+
+-   **100%** of the participants would be interested in learning new and improving on their repairing skills. Here is where the ETH Repair Café could really make a difference as a place to get educated on repairs, as it is very likely that people with a greater knowledge of how to repair stuff also are more likely to actually try to repair things.
 
 # References
