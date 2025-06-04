@@ -247,7 +247,7 @@ write_csv(data_eth_rc_tbl,"../data/final/data_repaircafe_table.csv")
 
 # Conclusions
 
--   **4.1** items is the average amount of potentially repairable items which the average participant discarded in the last year. This may not seem like a lot, but if this number is scaled to all members of ETH Zürich it is easy to see that if done right, a permanent repair café at ETH could have a great impact on reducing generated waste.
+-   **4.1** items is the amount of potentially repairable items which the average participant discarded in the last year. This may not seem like a lot, but if this number is scaled to all members of ETH Zürich it is easy to see that if done right, a permanent repair café at ETH could have a great impact on reducing generated waste.
 
 -   **40%** of the new price of an item is the average amount participants would pay for a repair. Therefore, running the ETH Repair Café as low-cost as possible is very important. Here a system of student volunteers could be a feasible solution, as:
 
